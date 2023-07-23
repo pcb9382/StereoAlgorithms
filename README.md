@@ -15,7 +15,7 @@
 1.  在标定显示的过程中，可以将角点检测不好的图像(一般是远处的角点比较小的)去除后重新标定
 
 
-# RAFTStrereo
+# RAFTStereo
 ## 导出到onnx
 1. 下载 [RAFT-Stereo](https://github.com/princeton-vl/RAFT-Stereo/tree/main)
 2. 因为F.grid_sample op直到onnx 16才支持，这里转换为mmcv的bilinear_grid_sample的op;
