@@ -7,12 +7,12 @@
 ## 使用方法
 1. 首先使用process_image.py将1280*480图像分割成640*480，分割的图像保存在根目录下(我用的是双目相机)
 2. 将对应生成的left*.jpg,right*.jpg图像名称放入stereo_calib.xml中，保证left,right顺序填写;
-3. 运行标定软件Stereo_Calibration: $./Stereo_Calibration 5 8 40 1
-    1. param1:程序名称
-    2. param2:纵向内角点数
-    3. param3:横向内角点数
-    4. param4:棋盘格大小
-    5. param5:是否显示标定过程中的的图像
+3. 运行标定软件Stereo_Calibration: $./Stereo_Calibration 5 8 40 1(最好看下代码的里面具体参数)
+    (1) param1:程序名称
+    (2) param2:纵向内角点数
+    (3) param3:横向内角点数
+    (4) param4:棋盘格大小
+    (5) param5:是否显示标定过程中的的图像
 4. 最终生成StereoCalibration.yml的标定文件
 
 ## 注意
