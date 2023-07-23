@@ -48,10 +48,10 @@
 # 使用方法
 ## 1.模型下载
 ([Baidu Drive](链接: https://pan.baidu.com/s/1tgeqPmjPeKmCDQ2NGJZMWQ code: hdiv))
-| 模型 |  作用    |  说明   |
+| 模型 |  说明   |  3090耗时(包含生成点云)  |
 |:----------|:----------|:----------|
-|raftstereo-sceneflow_480_640_poly.onnx   |sceneflow双目深度估计模型|        
-|raftstereo-realtime_480_640_ploy.onnx	   |realtime双目深度估计模型|             
+|raftstereo-sceneflow_480_640_poly.onnx   |sceneflow双目深度估计模型| 38ms |     
+|raftstereo-realtime_480_640_ploy.onnx	   |realtime双目深度估计模型| 11ms|           
 
 ## 2.环境
 1. ubuntu20.04+cuda11.1+cudnn8.2.1+TrnsorRT8.2.5.1(测试通过)
