@@ -31,8 +31,8 @@
    ```
 5. 在标定的过程中会显示左右图像的角点以及左右图像校正后拼接在一起的图像,可根据拼接后图像的绿色线来初步判断标定校正过程是否正确
    
-   <img src="./resource/left_calib.jpg" alt="drawing" width="400"/> <img src="./resource/right_calib.jpg" alt="drawing" width="400"/>
-    <img src="./resource/rectified.jpg" alt="drawing" width="800"/>
+   <img src="./resource/left_calib.jpg" alt="drawing" width="380"/><img src="./resource/right_calib.jpg" alt="drawing" width="380"/>
+    <img src="./resource/rectified.jpg" alt="drawing" width="760"/>
 6. 最终在根目录下生成StereoCalibration.yml的标定文件
 
 ### 注意
