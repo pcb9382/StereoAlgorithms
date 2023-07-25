@@ -30,9 +30,9 @@ int main()
     cv::imwrite("disparity.jpg",disparity);
     std::fstream pointcloudtxt;
     pointcloudtxt.open("pointcloud.txt",std::ios::out);
-    for (size_t i = 0; i < imageL.cols*imageL.rows*3; i++)
+    for (size_t i = 0; i < imageL.cols*imageL.rows*3; i+=3)
     {
-        pointcloudtxt<<pointcloud[i]<<std::endl;
+        pointcloudtxt<<pointcloud[i]<<" "<<pointcloud[i+1]<<" "<<pointcloud[i+2]<<std::endl;
     }
     pointcloudtxt.close();
     Release(raft_stereo);

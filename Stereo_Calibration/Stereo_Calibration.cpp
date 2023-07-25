@@ -91,6 +91,11 @@ void StereoCalibration(std::vector<std::string>imagelist, int numCornersVer, int
 		
 		image_l = cv::imread(imagelist[2*i]);
 		image_r = cv::imread(imagelist[2*i+1]);
+		if (image_l.empty()||image_r.empty())
+		{
+			std::cout<<"imagelist[2*i] The image does not exist!!"<<std::endl;
+		}
+		
 		s1 = image_l.size();
 		s2 = image_r.size();
 
@@ -121,11 +126,6 @@ void StereoCalibration(std::vector<std::string>imagelist, int numCornersVer, int
 		}
 
 	}
-	if (ShowChessCorners)
-	{
-		cv::destroyWindow("ChessboardCorners");
-	}
-	
 	cv::Mat intrinsic_left = cv::Mat(3, 3, CV_32FC1);
 	cv::Mat distCoeffs_left;
 	std::vector<cv::Mat> rvecs_l;
@@ -283,6 +283,7 @@ int main(int argc,char** argv)
 		if(1)//atoi(argv[4])
 		{
 			cv::imshow("rectified", canvas);
+			cv::imwrite("rectified.jpg",canvas);
 			cv::waitKey(0);
 		}
 	}
