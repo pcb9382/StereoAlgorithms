@@ -17,7 +17,7 @@
 3. 在更改你的棋盘格参数:1)纵向内角点数;2)横向内角点数, 3)棋盘格大小(mm),4)是否显示标定过程中的的图像
    ```
    numCornersHor = 8;                                          //水平方向棋盘格内角点个数
-   numCornersVer =11;   		                                 //垂直方向棋盘格内角点个数
+   numCornersVer =11;                                          //垂直方向棋盘格内角点个数
    numSquares =25;                                             //棋盘格宽高(这里默认是方格)
    rectifyImageSavePath = "Stereo_Calibration/rectifyImage"    //标定校正为完成后左右图像存放的路径
    imagelistfn="stereo_calib.xml"                              //待标定的左右图像路径
