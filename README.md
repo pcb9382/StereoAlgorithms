@@ -79,7 +79,7 @@
    //相机采集的右图像
    cv::Mat imageR=cv::imread("right0.jpg");
 ```
-### 3.RAFTStereo模块编译运行(其确保已经将step2中需要的文件拷贝到build文件夹下)
+### 3.RAFTStereo模块编译运行(确保已经将step2中需要的文件拷贝到build文件夹下)
    ```
    cd RAFTStereo
    mkdir build&&cd build
