@@ -10,7 +10,7 @@
 
 ### 2.QQ Group：517671804
 
-# Stereo_Calibration(双目相机标定)
+# 1. Stereo_Calibration(双目相机标定)
 ## 使用方法
 1. (可选)首先使用process_image.py脚本将图像(1280,480)的图像裁剪，裁剪后的左右图像(640,480)保存在left_right_image文件夹下
 2. left_right_image文件夹下的left*.jpg,right*.jpg图像名称写入stereo_calib.xml中，保证left,right顺序填写;
@@ -39,7 +39,7 @@
 1.  在标定显示的过程中，可以将角点检测有偏差的图像(一般是远处的角点比较小的)去除后重新标定
 
 
-# RAFTStereo
+# 2. RAFTStereo
 ## 1.pth导出到onnx
 1. 下载 [RAFT-Stereo](https://github.com/princeton-vl/RAFT-Stereo/tree/main)
 2. 因为F.grid_sample op直到onnx 16才支持，这里转换为mmcv的bilinear_grid_sample的op
@@ -108,26 +108,26 @@
 |jetson TX2-NX||400ms|sceneflow未尝试|
 |jetson Nano|||支持|
 
-# CREStereo(to do)
+# 3. CREStereo(to do)
 
-# DistDepth(to do)
+# 4. DistDepth(to do)
 
-# Hitnet(to do)
+# 5. Hitnet(to do)
 
-# RealtimeStereo(to do)
+# 6. RealtimeStereo(to do)
 
 
-# 使用方法
+# 7. 使用方法
         
 
-## 2.环境
+## 1.环境
 1. ubuntu20.04+cuda11.1+cudnn8.2.1+TrnsorRT8.2.5.1(测试通过)
 2. ubuntu18.04+cuda10.2+cudnn8.2.1+TrnsorRT8.2.5.1(测试通过)
 3. nano,TX2,TX2-NX,Xavier-NX                       (测试通过)
 4. 其他环境请自行尝试或者加群了解
 
 
-## 3.编译
+## 2.编译
 
 1. 更改根目录下的CMakeLists.txt,设置tensorrt的安装目录
 ```
