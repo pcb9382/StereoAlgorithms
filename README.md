@@ -205,5 +205,8 @@ set(TensorRT_LIB "/xxx/xxx/TensorRT-8.2.5.1/lib" CACHE INTERNAL "TensorRT Librar
 # References
 1. https://github.com/princeton-vl/RAFT-Stereo
 2. https://github.com/nburrus/RAFT-Stereo
+3. https://github.com/PINTO0309/PINTO_model_zoo/tree/main/142_HITNET
+4. https://github.com/iwatake2222/play_with_tensorrt/tree/master/pj_tensorrt_depth_stereo_hitnet
+5. https://github.com/ibaiGorordo/ONNX-HITNET-Stereo-Depth-estimation
 
 
