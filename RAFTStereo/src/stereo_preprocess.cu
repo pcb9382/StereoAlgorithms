@@ -38,7 +38,7 @@ __global__ void RAFTStereo_preprocess_kernel(uint8_t* src, int src_line_size, in
     *pdst_c2 = c2;
 }
 
-__global__ void cuda_reprojectImageTo3D_kernel(float*disparity,float*pointcloud,float*Q_device,int disparity_rows,int disparity_cols)
+__global__ void cuda_reprojectImageTo3D_kernel(uint8_t* left_img,float*disparity,float*pointcloud,float*Q_device,int disparity_rows,int disparity_cols)
 {
     int tid=blockIdx.x*blockDim.x+threadIdx.x;
     if(tid>=disparity_cols*disparity_rows)
@@ -51,13 +51,17 @@ __global__ void cuda_reprojectImageTo3D_kernel(float*disparity,float*pointcloud,
     float temp=-disparity[row*disparity_cols+col];
     disparity[row*disparity_cols+col]=temp;
     float w=Q_device[14]*temp;
-    if (w>0)
+
+    for (size_t i = 0; i < 3; i++)
     {
-        for (size_t i = 0; i < 3; i++)
-        {
-            pointcloud[(row*disparity_cols+col)*3+i]=(Q_device[i*4]*col+Q_device[i*4+1]*row+Q_device[i*4+3]*1)/w;  
-        }
+        pointcloud[(row*disparity_cols+col)*6+i]=(Q_device[i*4]*col+Q_device[i*4+1]*row+Q_device[i*4+3]*1)/w;  
     }
+    uint8_t* v = left_img + (row *disparity_cols  + col) * 3;
+    
+    pointcloud[(row*disparity_cols+col)*6+3]=(float)v[2]; 
+    pointcloud[(row*disparity_cols+col)*6+4]=(float)v[1];
+    pointcloud[(row*disparity_cols+col)*6+5]=(float)v[0];
+
 }
 
 
@@ -71,10 +75,10 @@ void RAFTStereo_preprocess(uint8_t* src, float* dst, int src_width, int src_heig
     RAFTStereo_preprocess_kernel<<<blocks, threads, 0, stream>>>(src, src_width*3, src_width, src_height, dst, jobs);
 }
 
-void cuda_reprojectImageTo3D(float*disparity,float*pointcloud,float*Q_device,int disparity_rows,int disparity_cols)
+void cuda_reprojectImageTo3D(uint8_t* left_img,float*disparity,float*pointcloud,float*Q_device,int disparity_rows,int disparity_cols)
 {
     int jobs=disparity_rows*disparity_cols;
     int threads=256;
     int blocks=(jobs+threads-1)/threads;
-    cuda_reprojectImageTo3D_kernel<<<blocks,threads>>>(disparity,pointcloud,Q_device,disparity_rows,disparity_cols);
+    cuda_reprojectImageTo3D_kernel<<<blocks,threads>>>(left_img,disparity,pointcloud,Q_device,disparity_rows,disparity_cols);
 }

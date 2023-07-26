@@ -5,8 +5,9 @@
             "name": "(gdb) 启动",
             "type": "cppdbg",
             "request": "launch",
-            //"program":"${workspaceFolder}/build/RAFTStereo/test/raft_stereo_demo",//RAFTStereo
-            "program":"${workspaceFolder}/build/Stereo_Calibration/Stereo_Calibration",
+            "program":"${workspaceFolder}/build/RAFTStereo/test/raft_stereo_demo",//RAFTStereo
+            //"program":"${workspaceFolder}/build/HitNet/test/HitNet_demo",//RAFTStereo
+            //"program":"${workspaceFolder}/build/Stereo_Calibration/Stereo_Calibration",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${fileDirname}",
