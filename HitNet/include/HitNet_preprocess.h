@@ -12,8 +12,8 @@ struct AffineMatrix
 
 
 
-void HitNet_preprocess(uint8_t* src, float* dst, int src_width, int src_height, cudaStream_t stream);
+void HitNet_preprocess(uint8_t* left,uint8_t* right,int width, int height, float* dst, cudaStream_t stream);
 
-void cuda_reprojectImageTo3D(float*disparity,float*pointcloud,float*Q_device,int disparity_rows,int disparity_cols);
+void HitNet_reprojectImageTo3D(uint8_t* left_img,float*disparity,float*pointcloud,float*Q_device,int disparity_rows,int disparity_cols);
 
 #endif  // __PREPROCESS_H

@@ -30,11 +30,11 @@ int RAFTStereo::Initialize(std::string model_path,int gpu_id,CalibrationParam&Ca
     }
     std::string out_engine=directory+"_batch=1.engine";
 
-    bool enginemodel=stereo_model_exists(out_engine);
+    bool enginemodel=file_exists(out_engine);
     if (!enginemodel)
     {
         std::cout << "Building engine, please wait for a while..." << std::endl;
-        bool onnx_model=stereo_model_exists(model_path);
+        bool onnx_model=file_exists(model_path);
         if (!onnx_model)
         {
            std::cout<<"stereo.onnx is not Exist!!!Please Check!"<<std::endl;
@@ -95,6 +95,7 @@ int RAFTStereo::Initialize(std::string model_path,int gpu_id,CalibrationParam&Ca
     // prepare input data cache in device memory
     CUDA_CHECK(cudaMalloc((void**)&img_left_device, INPUT_H * INPUT_W  * 3));
     CUDA_CHECK(cudaMalloc((void**)&img_right_device, INPUT_H * INPUT_W  * 3));
+    CUDA_CHECK(cudaMalloc((void**)&img_left_device_rgb,3*INPUT_H*INPUT_W*sizeof(u_int8_t)));
 
     CUDA_CHECK(cudaMalloc((void**)&PointCloud_devide, INPUT_H*INPUT_W*6*sizeof(float)));  
     
@@ -106,7 +107,6 @@ int RAFTStereo::Initialize(std::string model_path,int gpu_id,CalibrationParam&Ca
     {
         Calibrationparam_Q[i]=(float)_Q.val[i];
     }
-    size_image = INPUT_H * INPUT_W * 3;
     //disparity   
     flow_up=new float[STEREO_BATCH_SIZE * OUTPUT_SIZE2];
     return 0;
@@ -118,12 +118,16 @@ int RAFTStereo::RunRAFTStereo(cv::Mat&rectifyImageL2,cv::Mat&rectifyImageR2,floa
     assert((INPUT_W == rectifyImageL2.cols) && (INPUT_W == rectifyImageR2.cols));
     auto start = std::chrono::system_clock::now();
     //copy data to pinned memory
-    memcpy(img_left_host,rectifyImageL2.data, size_image);
-    memcpy(img_right_host,rectifyImageR2.data, size_image);
-
+    memcpy(img_left_host,rectifyImageL2.data, 3*INPUT_H*INPUT_W*sizeof(uint8_t));
+    memcpy(img_right_host,rectifyImageR2.data, 3*INPUT_H*INPUT_W*sizeof(uint8_t));
+   
     //copy data to device memory
-    CUDA_CHECK(cudaMemcpyAsync(img_left_device, img_left_host, size_image, cudaMemcpyHostToDevice,stream));
-    CUDA_CHECK(cudaMemcpyAsync(img_right_device, img_right_host, size_image, cudaMemcpyHostToDevice,stream));
+    CUDA_CHECK(cudaMemcpyAsync(img_left_device, img_left_host, 3*INPUT_H*INPUT_W*sizeof(uint8_t), cudaMemcpyHostToDevice,stream));
+    CUDA_CHECK(cudaMemcpyAsync(img_right_device, img_right_host, 3*INPUT_H*INPUT_W*sizeof(uint8_t), cudaMemcpyHostToDevice,stream));
+
+    //pointcloud+rgb
+    CUDA_CHECK(cudaMemcpyAsync(img_left_device_rgb,img_left_device,3*INPUT_H*INPUT_W*sizeof(u_int8_t),cudaMemcpyDeviceToDevice,stream));
+
 
     RAFTStereo_preprocess(img_left_device, buffers[inputIndex1], INPUT_W, INPUT_H, stream);
     RAFTStereo_preprocess(img_right_device, buffers[inputIndex2], INPUT_W, INPUT_H, stream);
@@ -132,8 +136,8 @@ int RAFTStereo::RunRAFTStereo(cv::Mat&rectifyImageL2,cv::Mat&rectifyImageR2,floa
     (*context).enqueue(STEREO_BATCH_SIZE, (void**)buffers, stream, nullptr);
  
     cudaStreamSynchronize(stream);
-    cuda_reprojectImageTo3D(img_left_device,buffers[2],PointCloud_devide,Calibrationparam_Q,INPUT_H,INPUT_W);
-    cudaDeviceSynchronize();
+    cuda_reprojectImageTo3D(img_left_device_rgb,buffers[2],PointCloud_devide,Calibrationparam_Q,INPUT_H,INPUT_W);
+    
 
     CUDA_CHECK(cudaMemcpy(flow_up, buffers[2], STEREO_BATCH_SIZE * OUTPUT_SIZE2 * sizeof(float), cudaMemcpyDeviceToHost));
     CUDA_CHECK(cudaMemcpy(pointcloud,PointCloud_devide,INPUT_H*INPUT_W*6*sizeof(float),cudaMemcpyDeviceToHost));
@@ -150,6 +154,7 @@ int RAFTStereo::Release()
     CUDA_CHECK(cudaFreeHost(img_left_host));
     CUDA_CHECK(cudaFreeHost(img_right_host));
     CUDA_CHECK(cudaFree(img_left_device));
+    CUDA_CHECK(cudaFree(img_left_device_rgb));
     CUDA_CHECK(cudaFree(img_right_device));
     CUDA_CHECK(cudaFree(buffers[inputIndex1]));
     CUDA_CHECK(cudaFree(buffers[inputIndex2]));

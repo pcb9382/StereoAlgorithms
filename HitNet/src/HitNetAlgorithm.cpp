@@ -44,8 +44,6 @@ int HitNetAlgorithm::RunHitNet(cv::Mat&left_image,cv::Mat&right_image,float*poin
         std::cout<<"Image_src is empty!!!"<<std::endl;
         return -1;
     }
-  
-    //这里因为一直是left和right的图像，所以使用clone，防止多次矫正匹配有问题
     RectifyImage(left_image,right_image);
     raftstereo.RunHitNet(left_image,right_image,pointcloud,disparity);
     return 0;    

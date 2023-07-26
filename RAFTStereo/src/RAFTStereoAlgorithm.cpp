@@ -19,6 +19,7 @@ public:
     int RectifyImage(cv::Mat&rectifyImageL2,cv::Mat&rectifyImageR2);
 public:
     CalibrationParam Calibrationparam;
+    int initflag=-1;
 };
 
 RAFTStereoAlgorithm::RAFTStereoAlgorithm(/* args */)
@@ -33,19 +34,38 @@ RAFTStereoAlgorithm::~RAFTStereoAlgorithm()
 int RAFTStereoAlgorithm::Initialize(char* model_path,int gpu_id,char*calibration_path)
 {
    std::string model_path_str=model_path;
-   ReadObjectYml(calibration_path,Calibrationparam);
-   return raftstereo.Initialize(model_path_str,gpu_id,Calibrationparam);
+   if(raftstereo.file_exists(calibration_path))
+   {
+        ReadObjectYml(calibration_path,Calibrationparam);
+   }
+   else
+   {
+        std::cout<<"calibration_path does not exist!!!"<<std::endl;
+   }
+   initflag=raftstereo.Initialize(model_path_str,gpu_id,Calibrationparam);
+   if (initflag!=0)
+   {
+        std::cout<<"init failed!!"<<std::endl;
+        return -1;
+   }
+   initflag=0;
+   std::cout<<"init successed!"<<std::endl;
+   return 0;
+  
 }
 
 int RAFTStereoAlgorithm::RunRAFTStereo(cv::Mat&left_image,cv::Mat&right_image,float*pointcloud,cv::Mat&disparity)
 {
+    if (initflag!=0)
+    {
+        std::cout<<"init failed,please check!!"<<std::endl;
+        return -1;
+    }
     if (left_image.empty()||left_image.data==nullptr||right_image.empty()||right_image.data==nullptr)
     {
         std::cout<<"Image_src is empty!!!"<<std::endl;
         return -1;
     }
-  
-    //这里因为一直是left和right的图像，所以使用clone，防止多次矫正匹配有问题
     RectifyImage(left_image,right_image);
     raftstereo.RunRAFTStereo(left_image,right_image,pointcloud,disparity);
     return 0;    

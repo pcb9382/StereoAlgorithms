@@ -73,9 +73,6 @@ public:
     float * disparity_data;
     // Create stream
     cudaStream_t stream;
-    size_t size_image;
-    uint8_t* img_left_host = nullptr;
-    uint8_t* img_right_host = nullptr;
     uint8_t* img_left_device = nullptr;
     uint8_t* img_right_device = nullptr;
     float*PointCloud_devide=nullptr;

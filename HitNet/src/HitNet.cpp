@@ -57,8 +57,6 @@ int HitNet::Initialize(std::string model_path,int gpu_id,CalibrationParam&Calibr
     {
         return -1;
     }
-    // init plugin
-    //bool didInitPlugins = initLibNvInferPlugins(nullptr, "");
 
     runtime = createInferRuntime(gLogger);
     assert(runtime != nullptr);
@@ -80,16 +78,10 @@ int HitNet::Initialize(std::string model_path,int gpu_id,CalibrationParam&Calibr
     CUDA_CHECK(cudaMalloc((void**)&buffers[inputIndex], HITNET_BATCH_SIZE*2* 3 * INPUT_H * INPUT_W * sizeof(float)));
     CUDA_CHECK(cudaMalloc((void**)&buffers[outputIndex], HITNET_BATCH_SIZE * OUTPUT_SIZE * sizeof(float)));
 
-
-     // prepare input data cache in pinned memory
-    CUDA_CHECK(cudaMallocHost((void**)&img_left_host, INPUT_H * INPUT_W  * 3));
-    CUDA_CHECK(cudaMallocHost((void**)&img_right_host, INPUT_H * INPUT_W  * 3));
     // prepare input data cache in device memory
     CUDA_CHECK(cudaMalloc((void**)&img_left_device, INPUT_H * INPUT_W  * 3));
     CUDA_CHECK(cudaMalloc((void**)&img_right_device, INPUT_H * INPUT_W  * 3));
-
-    CUDA_CHECK(cudaMalloc((void**)&PointCloud_devide, INPUT_H*INPUT_W*3*sizeof(float)));  
-    
+    CUDA_CHECK(cudaMalloc((void**)&PointCloud_devide, INPUT_H*INPUT_W*6*sizeof(float)));  
     CUDA_CHECK(cudaMalloc((void**)&Q_device,16*sizeof(float)));
     cv::Matx44d _Q;
     this->Calibrationparam.Q.convertTo(_Q, CV_64F);
@@ -98,10 +90,8 @@ int HitNet::Initialize(std::string model_path,int gpu_id,CalibrationParam&Calibr
     {
         Calibrationparam_Q[i]=(float)_Q.val[i];
     }
-    size_image = INPUT_H * INPUT_W * 3;
     //disparity   
     flow_up=new float[HITNET_BATCH_SIZE * OUTPUT_SIZE];
-    data=new float[HITNET_BATCH_SIZE*2*3*INPUT_H*INPUT_W];
     return 0;
 }
 
@@ -114,35 +104,18 @@ int HitNet::RunHitNet(cv::Mat&rectifyImageL2,cv::Mat&rectifyImageR2,float*pointc
     // memcpy(img_left_host,rectifyImageL2.data, size_image);
     // memcpy(img_right_host,rectifyImageR2.data, size_image);
 
-    // //copy data to device memory
-    // CUDA_CHECK(cudaMemcpyAsync(img_left_device, img_left_host, size_image, cudaMemcpyHostToDevice,stream));
-    // CUDA_CHECK(cudaMemcpyAsync(img_right_device, img_right_host, size_image, cudaMemcpyHostToDevice,stream));
+    //copy data to device memory
+    CUDA_CHECK(cudaMemcpyAsync(img_left_device, rectifyImageL2.data, INPUT_H * INPUT_W * 3*sizeof(u_int8_t), cudaMemcpyHostToDevice,stream));
+    CUDA_CHECK(cudaMemcpyAsync(img_right_device, rectifyImageR2.data, INPUT_H * INPUT_W * 3*sizeof(u_int8_t), cudaMemcpyHostToDevice,stream));
 
-    // HitNet_preprocess(img_left_device, buffers[inputIndex], INPUT_W, INPUT_H, stream);
-    // // Run inference
-
-    cv::resize(rectifyImageL2, rectifyImageL2, cv::Size(INPUT_W,INPUT_H));
-    cv::resize(rectifyImageR2, rectifyImageR2, cv::Size(INPUT_W,INPUT_H));
-    cv::cvtColor(rectifyImageL2, rectifyImageL2, cv::COLOR_BGR2RGB);
-    cv::cvtColor(rectifyImageR2, rectifyImageR2, cv::COLOR_BGR2RGB);
-    int image_size=INPUT_W*INPUT_H;
-    const int32_t offset_for_right_image = image_size * 3;
-    for (int32_t c = 0; c < 3; c++) 
-    {
-        for (int32_t i = 0; i < image_size; i++) 
-        {
-            data[i + c * image_size] = rectifyImageL2.data[i * 3 + c] / 255.0f;
-            data[i + c * image_size + offset_for_right_image] = rectifyImageR2.data[i * 3 + c] / 255.0f;
-        }
-    }
-    CUDA_CHECK(cudaMemcpy(buffers[inputIndex],data,HITNET_BATCH_SIZE*2*3*INPUT_W*INPUT_H*sizeof(float),cudaMemcpyHostToDevice));
-
+    HitNet_preprocess(img_left_device,img_right_device,INPUT_W, INPUT_H,buffers[inputIndex], stream);
+    // Run inference
     (*context).enqueue(HITNET_BATCH_SIZE, (void**)buffers, stream, nullptr);
  
     cudaStreamSynchronize(stream);
-    cuda_reprojectImageTo3D(buffers[outputIndex],PointCloud_devide,Calibrationparam_Q,INPUT_H,INPUT_W);
+    HitNet_reprojectImageTo3D(img_left_device,buffers[outputIndex],PointCloud_devide,Calibrationparam_Q,INPUT_H,INPUT_W);
     CUDA_CHECK(cudaMemcpy(flow_up, buffers[outputIndex], HITNET_BATCH_SIZE * OUTPUT_SIZE * sizeof(float), cudaMemcpyDeviceToHost));
-    CUDA_CHECK(cudaMemcpy(pointcloud,PointCloud_devide,INPUT_H*INPUT_W*3*sizeof(float),cudaMemcpyDeviceToHost));
+    CUDA_CHECK(cudaMemcpy(pointcloud,PointCloud_devide,INPUT_H*INPUT_W*6*sizeof(float),cudaMemcpyDeviceToHost));
     auto end = std::chrono::system_clock::now();
     std::cout<<"inference time:"<<(std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count())<<"ms"<<std::endl;
     
@@ -153,8 +126,6 @@ int HitNet::RunHitNet(cv::Mat&rectifyImageL2,cv::Mat&rectifyImageR2,float*pointc
 int HitNet::Release()
 {
     cudaStreamDestroy(stream);
-    CUDA_CHECK(cudaFreeHost(img_left_host));
-    CUDA_CHECK(cudaFreeHost(img_right_host));
     CUDA_CHECK(cudaFree(img_left_device));
     CUDA_CHECK(cudaFree(img_right_device));
     CUDA_CHECK(cudaFree(buffers[inputIndex]));
@@ -167,7 +138,5 @@ int HitNet::Release()
     runtime->destroy();
     delete []flow_up;
     flow_up=NULL;
-    delete []data;
-    data=nullptr;
     return 0;
 }

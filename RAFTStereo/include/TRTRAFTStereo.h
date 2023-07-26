@@ -77,10 +77,10 @@ public:
     float * disparity_data;
     // Create stream
     cudaStream_t stream;
-    size_t size_image;
     uint8_t* img_left_host = nullptr;
     uint8_t* img_right_host = nullptr;
     uint8_t* img_left_device = nullptr;
+    uint8_t *img_left_device_rgb=nullptr;
     uint8_t* img_right_device = nullptr;
     float*PointCloud_devide=nullptr;
     float*Q_device;
@@ -88,7 +88,7 @@ public:
     CalibrationParam Calibrationparam;
 
 public:
-    inline bool stereo_model_exists (const std::string& name) 
+    inline bool file_exists (const std::string& name) 
     {
         std::ifstream f(name.c_str());
         return f.good();

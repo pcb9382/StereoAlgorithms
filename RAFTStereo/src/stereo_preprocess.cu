@@ -47,6 +47,9 @@ __global__ void cuda_reprojectImageTo3D_kernel(uint8_t* left_img,float*disparity
     }
     int col=tid%disparity_cols;
     int row=tid/disparity_cols;
+
+    uint8_t* v = left_img + row * disparity_cols*3 + col * 3;
+
     //Q*disparity
     float temp=-disparity[row*disparity_cols+col];
     disparity[row*disparity_cols+col]=temp;
@@ -56,7 +59,7 @@ __global__ void cuda_reprojectImageTo3D_kernel(uint8_t* left_img,float*disparity
     {
         pointcloud[(row*disparity_cols+col)*6+i]=(Q_device[i*4]*col+Q_device[i*4+1]*row+Q_device[i*4+3]*1)/w;  
     }
-    uint8_t* v = left_img + (row *disparity_cols  + col) * 3;
+    // uint8_t* v = left_img + (row *disparity_cols  + col) * 3;
     
     pointcloud[(row*disparity_cols+col)*6+3]=(float)v[2]; 
     pointcloud[(row*disparity_cols+col)*6+4]=(float)v[1];
