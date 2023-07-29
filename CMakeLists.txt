@@ -8,5 +8,6 @@ set(TensorRT_LIB "/home/pcb/TensorRT-8.2.5.1/lib" CACHE INTERNAL "TensorRT Libra
 #添加子目录
 add_subdirectory("RAFTStereo")
 add_subdirectory("HitNet")
+add_subdirectory("CREStereo")
 add_subdirectory("Stereo_Calibration")
 

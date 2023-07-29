@@ -18,6 +18,8 @@
         "${workspaceFolder}/HitNet/include",
         "${workspaceFolder}/HitNet/src",
         "${workspaceFolder}/common/*",
+        "${workspaceFolder}/CREStereo/include",
+        "${workspaceFolder}/CREStereo/src",
         "${workspaceFolder}/include/*",
         "${workspaceFolder}/include/Eigen"
       ],
