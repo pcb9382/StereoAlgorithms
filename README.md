@@ -199,7 +199,7 @@
    <img src="./resource/CREStereo_heatmap.jpg" alt="drawing" width="380"/><img src="./resource/CREStereo_pointcloud.png" alt="drawing" width="380"/>
     
 ### 6.其他
-  平台|crestereo_init_iter2_640*480|crestereo_init_iter5_480x640|crestereo_init_iter10_480x640|说明|
+  平台|iter2_480x640|iter5_480x640|iter10_480x640|说明|
 |:----------:|:----------:|:----------:|:----------:|:----------:|
 |3090|12ms|23ms|42ms||   
 |3060||||未测试|
