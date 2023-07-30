@@ -278,6 +278,7 @@ set(TensorRT_LIB "/xxx/xxx/TensorRT-8.2.5.1/lib" CACHE INTERNAL "TensorRT Librar
    cv::Mat imageR=cv::imread("right0.jpg");
 ```
 #### 3.编译运行(确保已经将step2中需要的文件拷贝到相应的文件夹下)
+   根目录添加:add_subdirectory("FastACVNet_plus")
    ```
    cd StereoAlgorithms
    mkdir build&&cd build
