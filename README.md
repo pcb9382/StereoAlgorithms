@@ -12,9 +12,9 @@
 
 
 # requirements
-1. ubuntu20.04+cuda11.1+cudnn8.2.1+TrnsorRT8.2.5.1 (test pass)
-2. ubuntu20.04+cuda11.1+cudnn8.2.1+TrnsorRT8.6.1.6 (FastACVNet_plus requied TrnsorRT8.6.1.6)
-3. ubuntu18.04+cuda10.2+cudnn8.2.1+TrnsorRT8.2.5.1 (test pass)
+1. ubuntu20.04+cuda11.1+cudnn8.2.1+TensorRT8.2.5.1 (test pass)
+2. ubuntu20.04+cuda11.1+cudnn8.2.1+TensorRT8.6.1.6 (FastACVNet_plus requied TrnsorRT8.6.1.6)
+3. ubuntu18.04+cuda10.2+cudnn8.2.1+TensorRT8.2.5.1 (test pass)
 4. nano,TX2,TX2-NX,Xavier-NX                       (test pass)
 5. For other environments, please try it yourself or join a group to understand
 
@@ -254,7 +254,7 @@ set(TensorRT_LIB "/xxx/xxx/TensorRT-8.2.5.1/lib" CACHE INTERNAL "TensorRT Librar
 2. https://github.com/ibaiGorordo/ONNX-CREStereo-Depth-Estimation
 3. https://github.com/PINTO0309/PINTO_model_zoo/tree/main/284_CREStereo
 
-## 5.FastACVNet_plus(只支持TensoRT8.6+！！！)
+## 5.FastACVNet_plus(只支持TensorRT8.6+！！！)
 ### 1.三维重建效果
 #### 1.Demo on KITTI raw data
    <img src="./resource/kittiraw_demo.gif" alt="drawing" width="800"/>
