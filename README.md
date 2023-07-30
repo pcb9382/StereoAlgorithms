@@ -249,5 +249,9 @@ set(TensorRT_LIB "/xxx/xxx/TensorRT-8.2.5.1/lib" CACHE INTERNAL "TensorRT Librar
 3. https://github.com/PINTO0309/PINTO_model_zoo/tree/main/142_HITNET
 4. https://github.com/iwatake2222/play_with_tensorrt/tree/master/pj_tensorrt_depth_stereo_hitnet
 5. https://github.com/ibaiGorordo/ONNX-HITNET-Stereo-Depth-estimation
+6. https://github.com/megvii-research/CREStereo
+7. https://github.com/ibaiGorordo/ONNX-CREStereo-Depth-Estimation
+8. https://github.com/PINTO0309/PINTO_model_zoo/tree/main/284_CREStereo
+
 
 
