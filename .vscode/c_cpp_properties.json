@@ -20,6 +20,8 @@
         "${workspaceFolder}/common/*",
         "${workspaceFolder}/CREStereo/include",
         "${workspaceFolder}/CREStereo/src",
+        "${workspaceFolder}/FastACVNet_plus/include",
+        "${workspaceFolder}/FastACVNet_plus/src",
         "${workspaceFolder}/include/*",
         "${workspaceFolder}/include/Eigen"
       ],

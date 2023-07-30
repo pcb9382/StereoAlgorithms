@@ -39,7 +39,7 @@ int HitNet::Initialize(std::string model_path,int gpu_id,CalibrationParam&Calibr
         }
         Onnx2Ttr onnx2trt;
 		//IHostMemory* modelStream{ nullptr };
-		onnx2trt.onnxToTRTModel(model_path.c_str(),1,out_engine.c_str());
+		onnx2trt.onnxToTRTModel(gLogger,model_path.c_str(),1,out_engine.c_str());
     }
     cudaSetDevice(gpu_id);
     std::ifstream file(out_engine, std::ios::binary);
@@ -110,8 +110,8 @@ int HitNet::RunHitNet(cv::Mat&rectifyImageL2,cv::Mat&rectifyImageR2,float*pointc
 
     HitNet_preprocess(img_left_device,img_right_device,INPUT_W, INPUT_H,buffers[inputIndex], stream);
     // Run inference
-    (*context).enqueue(HITNET_BATCH_SIZE, (void**)buffers, stream, nullptr);
- 
+    //(*context).enqueue(HITNET_BATCH_SIZE, (void**)buffers, stream, nullptr);
+    (*context).enqueueV2((void**)buffers, stream, nullptr);
     cudaStreamSynchronize(stream);
     HitNet_reprojectImageTo3D(img_left_device,buffers[outputIndex],PointCloud_devide,Calibrationparam_Q,INPUT_H,INPUT_W);
     CUDA_CHECK(cudaMemcpy(flow_up, buffers[outputIndex], HITNET_BATCH_SIZE * OUTPUT_SIZE * sizeof(float), cudaMemcpyDeviceToHost));

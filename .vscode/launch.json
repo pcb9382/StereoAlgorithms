@@ -7,7 +7,8 @@
             "request": "launch",
             //"program":"${workspaceFolder}/build/RAFTStereo/test/raft_stereo_demo",//RAFTStereo
             //"program":"${workspaceFolder}/build/HitNet/test/HitNet_demo",//HIENET
-            "program":"${workspaceFolder}/build/CREStereo/test/crestereo_demo",//CREStereo
+            //"program":"${workspaceFolder}/build/CREStereo/test/crestereo_demo",//CREStereo
+            "program":"${workspaceFolder}/build/FastACVNet_plus/test/fastacvnet_plus_demo",//FastACVNet_plus
             //"program":"${workspaceFolder}/build/Stereo_Calibration/Stereo_Calibration",
             "args": [],
             "stopAtEntry": false,

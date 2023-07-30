@@ -42,7 +42,7 @@ int RAFTStereo::Initialize(std::string model_path,int gpu_id,CalibrationParam&Ca
         }
         Onnx2Ttr onnx2trt;
 		//IHostMemory* modelStream{ nullptr };
-		onnx2trt.onnxToTRTModel(model_path.c_str(),1,out_engine.c_str());
+		onnx2trt.onnxToTRTModel(gLogger,model_path.c_str(),1,out_engine.c_str());
     }
     cudaSetDevice(gpu_id);
     std::ifstream file(out_engine, std::ios::binary);
@@ -133,7 +133,8 @@ int RAFTStereo::RunRAFTStereo(cv::Mat&rectifyImageL2,cv::Mat&rectifyImageR2,floa
     RAFTStereo_preprocess(img_right_device, buffers[inputIndex2], INPUT_W, INPUT_H, stream);
 
     // Run inference
-    (*context).enqueue(STEREO_BATCH_SIZE, (void**)buffers, stream, nullptr);
+    //(*context).enqueue(STEREO_BATCH_SIZE, (void**)buffers, stream, nullptr);
+    (*context).enqueueV2((void**)buffers, stream, nullptr);
  
     cudaStreamSynchronize(stream);
     cuda_reprojectImageTo3D(img_left_device_rgb,buffers[2],PointCloud_devide,Calibrationparam_Q,INPUT_H,INPUT_W);

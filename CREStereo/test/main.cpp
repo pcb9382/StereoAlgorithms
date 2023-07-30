@@ -28,7 +28,7 @@ int main()
 {
 
     char* stereo_calibration_path="StereoCalibration.yml";
-    char* strero_engine_path="/home/pcb/Algorithm/StereoAlgorithmsPytorch/CREStereo/CREStereo/crestereo_init_iter10_480x640.onnx";
+    char* strero_engine_path="/home/pcb/Algorithm/StereoAlgorithmsPytorch/CREStereo/CREStereo/crestereo_init_iter5_480x640.onnx";
     
     cv::Mat imageL=cv::imread("left0.jpg");
     cv::Mat imageR=cv::imread("right0.jpg");
