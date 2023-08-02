@@ -1,5 +1,5 @@
 
-简体中文 | [English](./RAFTStereoAlgorithm_en.md)
+简体中文 | [English](./README_en.md)
 
 如果觉得有用，不妨给个Star⭐️🌟支持一下吧~ 谢谢！
 
@@ -11,7 +11,7 @@
 ### 2.QQ Group：517671804
 
 
-# requirements
+# Requirements
 1. ubuntu20.04+cuda11.1+cudnn8.2.1+TensorRT8.2.5.1 (test pass)
 2. ubuntu20.04+cuda11.1+cudnn8.2.1+TensorRT8.6.1.6 (FastACVNet_plus requied TrnsorRT8.6.1.6)
 3. ubuntu18.04+cuda10.2+cudnn8.2.1+TensorRT8.2.5.1 (test pass)
