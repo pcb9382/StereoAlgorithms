@@ -102,7 +102,7 @@ set(TensorRT_LIB "/xxx/xxx/TensorRT-8.2.5.1/lib" CACHE INTERNAL "TensorRT Librar
 
 ### 3.Use the exported ONNX model or download the exported ONNX model
 #### 1.Model download
-([Baidu Drive](https://pan.baidu.com/s/1tgeqPmjPeKmCDQ2NGJZMWQ code: hdiv))
+([Baidu Drive](https://pan.baidu.com/s/1y74fIsZNsLj_kXp6ziYs6w code:6cj6))
 
 #### 2.Parameter settings (preferably write absolute paths or copy the required files to the /build/RAFTStereo/test folder)
 ```
@@ -161,7 +161,7 @@ set(TensorRT_LIB "/xxx/xxx/TensorRT-8.2.5.1/lib" CACHE INTERNAL "TensorRT Librar
 
 ### 2.Use the exported ONNX model or download the exported ONNX model
 #### 1.Model download
-([Baidu Drive](https://pan.baidu.com/s/1R3KU-pGJUJvGVOg8MPg8Nw code: 6stm))
+([Baidu Drive](https://pan.baidu.com/s/1M99QhZySeMK2FjaMz-WZxg code:rs3))
 
 #### 2.Parameter settings (preferably write absolute paths or copy the required files to the /build/RAFTStereo/test folder)
 ```
@@ -212,7 +212,7 @@ set(TensorRT_LIB "/xxx/xxx/TensorRT-8.2.5.1/lib" CACHE INTERNAL "TensorRT Librar
 
 ### 2.Use the exported ONNX model or download the exported ONNX model
 #### 1.Download
-([Baidu Drive](https://pan.baidu.com/s/1lGL8FOjcy6c1y5oDJLYA4w code:gimg))
+([Baidu Drive](https://pan.baidu.com/s/1GdvBmbx9NCONVGiaSThK1g code:damr))
 
 #### 2.Parameter settings (preferably write absolute paths or copy the required files to the /build/RAFTStereo/test folder)
 ```
@@ -264,7 +264,7 @@ set(TensorRT_LIB "/xxx/xxx/TensorRT-8.2.5.1/lib" CACHE INTERNAL "TensorRT Librar
 
 ### 2.Use the exported ONNX model or download the exported ONNX model
 #### 1.Download
-([Baidu Drive](https://pan.baidu.com/s/1kxrNLlAFgpTwECF21SM9_g code:83qn))
+([Baidu Drive](https://pan.baidu.com/s/1gQ32lQS3YoXLVG5u9o5tPw code: ey7e))
 
 #### 2..Parameter settings (preferably write absolute paths or copy the required files to the /build/RAFTStereo/test folder)
 ```

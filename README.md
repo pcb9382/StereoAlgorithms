@@ -102,7 +102,7 @@ set(TensorRT_LIB "/xxx/xxx/TensorRT-8.2.5.1/lib" CACHE INTERNAL "TensorRT Librar
 
 ### 3.使用导出的onnx模型或者下载已经转好的onnx模型
 #### 1.模型下载
-([Baidu Drive](链接: https://pan.baidu.com/s/1tgeqPmjPeKmCDQ2NGJZMWQ code: hdiv))
+([Baidu Drive](链接: https://pan.baidu.com/s/1y74fIsZNsLj_kXp6ziYs6w 提取码: 6cj6))
 
 #### 2.参数设置(最好写绝对路径或者将需要的文件拷贝到/build/RAFTStereo/test文件夹下)
 ```
@@ -161,7 +161,7 @@ set(TensorRT_LIB "/xxx/xxx/TensorRT-8.2.5.1/lib" CACHE INTERNAL "TensorRT Librar
 
 ### 2.使用导出的onnx模型
 #### 1.模型下载
-([Baidu Drive](链接: 链接: https://pan.baidu.com/s/1R3KU-pGJUJvGVOg8MPg8Nw 提取码: 6stm))
+([Baidu Drive](链接: https://pan.baidu.com/s/1M99QhZySeMK2FjaMz-WZxg 提取码: rs3j))
 
 #### 2.参数设置(最好写绝对路径或者将需要的文件拷贝到/build/HitNet/test文件夹下)
 ```
@@ -212,7 +212,7 @@ set(TensorRT_LIB "/xxx/xxx/TensorRT-8.2.5.1/lib" CACHE INTERNAL "TensorRT Librar
 
 ### 2.使用导出的onnx模型
 #### 1.模型下载
-([Baidu Drive](链接: https://pan.baidu.com/s/1lGL8FOjcy6c1y5oDJLYA4w 提取码: gimg))
+([Baidu Drive](链接: https://pan.baidu.com/s/1GdvBmbx9NCONVGiaSThK1g 提取码: damr))
 
 #### 2.参数设置(最好写绝对路径或者将需要的文件拷贝到/build/CREStereo/test文件夹下)
 ```
@@ -264,7 +264,7 @@ set(TensorRT_LIB "/xxx/xxx/TensorRT-8.2.5.1/lib" CACHE INTERNAL "TensorRT Librar
 
 ### 2.使用导出的onnx模型
 #### 1.模型下载
-([Baidu Drive](链接: https://pan.baidu.com/s/1kxrNLlAFgpTwECF21SM9_g 提取码: 83qn))
+([Baidu Drive](链接: https://pan.baidu.com/s/1gQ32lQS3YoXLVG5u9o5tPw 提取码: ey7e))
 
 #### 2.参数设置(最好写绝对路径或者将需要的文件拷贝到/build/FastACVNet_plus/test/文件夹下)
 ```
