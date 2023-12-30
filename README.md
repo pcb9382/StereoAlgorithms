@@ -13,7 +13,7 @@
 
 # Requirements
 1. ubuntu20.04+cuda11.1+cudnn8.2.1+TensorRT8.2.5.1 (test pass)
-2. ubuntu20.04+cuda11.1+cudnn8.2.1+TensorRT8.6.1.6 (FastACVNet_plus requied TrnsorRT8.6.1.6)
+2. ubuntu20.04+cuda11.1+cudnn8.2.1+TensorRT8.6.1.6 (FastACVNet_plus requied TensorRT8.6.1.6)
 3. ubuntu18.04+cuda10.2+cudnn8.2.1+TensorRT8.2.5.1 (test pass)
 4. nano,TX2,TX2-NX,Xavier-NX                       (test pass)
 5. For other environments, please try it yourself or join a group to understand
