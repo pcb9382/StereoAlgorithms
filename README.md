@@ -6,7 +6,7 @@
 # Acknowledgments & Contact 
 
 ### 1.WeChat ID: cbp931126
-加微信(备注：StereoAlgorithm),拉你进群
+加微信(备注：StereoAlgorithm),拉你进群(群里超多大佬)
 
 ### 2.QQ Group：517671804
 
